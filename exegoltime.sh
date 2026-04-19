@@ -42,7 +42,7 @@ except ImportError:
 }
 
 exegoltime_off() {
-    unset LD_PRELOAD FAKETIME FAKETIME_NO_CACHE FAKETIME_TIMESTAMP_FILE
+    unset LD_PRELOAD FAKETIME FAKETIME_NO_CACHE FAKETIME_TIMESTAMP_FILE FAKETIME_DONT_FAKE_MONOTONIC
     rm -f "$STATE_FILE"
     echo "[exegoltime] faketime disabled"
 }
@@ -211,8 +211,8 @@ EOF
 
 # Dispatch
 case "${1:-}" in
-    --off)       exegoltime_off ;;
-    --status)    exegoltime_status ;;
-    --load)      exegoltime_load ;;
-    *)           exegoltime_set "$1" ;;
+    --off|off|unset)  exegoltime_off ;;
+    --status|status)  exegoltime_status ;;
+    --load|load)      exegoltime_load ;;
+    *)                exegoltime_set "$1" ;;
 esac
